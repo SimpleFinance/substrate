@@ -1,0 +1,9 @@
+#!/bin/bash
+set -o pipefail
+
+# shellcheck disable=SC1091
+. common.sh
+
+for module in "${TERRAFORM_MODULES[@]}"; do
+    "$TERRAFORM" fmt -list=false "$module"
+done

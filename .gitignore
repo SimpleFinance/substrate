@@ -1,0 +1,16 @@
+/bin/
+/build/
+/cache/
+.terraform
+*~
+*.gpg
+*.tfplan
+*.tfstate
+*.tfstate.backup
+*.tgz
+/*.json
+/*.json.bak
+/.brew_home/
+TODO
+/.gopath
+/.DS_Store

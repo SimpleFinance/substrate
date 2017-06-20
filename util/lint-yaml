@@ -1,0 +1,14 @@
+#!/bin/bash
+set -o pipefail
+
+# make sure all our .yaml files parse
+STATUS=0
+while read -r filename; do
+    yamlout=$("$YAML" r "$filename")
+    if [ $? -ne 0 ] ; then
+        echo "[yaml]: syntax error in $filename - $yamlout"
+        STATUS=1
+    fi
+done < <(find . \( -path ./vendor -o -path ./.git -o -path ./.gopath \) -prune -o -type f -iname "*.yaml" -print)
+
+exit "$STATUS"

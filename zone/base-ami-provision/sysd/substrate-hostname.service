@@ -1,0 +1,22 @@
+# Sets the system hostname to our chosen FQDN.
+#
+# This unit runs after substrate-node-env.service, and sets the system hostname
+# to the "${FQDN}" value chosen in substrate-node-env.sh. It also tweaks the
+# /etc/hosts file so the new hostname will resolve correctly locally, and
+# is pinned to run before rsyslog so rsyslog will pick up on the new hostname
+# correctly.
+[Unit]
+Description=Substrate hostname setup
+Before=rsyslog.service
+After=substrate-node-env.service
+Requires=substrate-node-env.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=True
+EnvironmentFile=/etc/substrate/node.env
+ExecStart=/usr/bin/hostnamectl set-hostname "${FQDN}"
+ExecStart=/bin/sed -i "s/127.0.0.1.*/127.0.0.1 ${FQDN} localhost/g" /etc/hosts
+
+[Install]
+WantedBy=multi-user.target

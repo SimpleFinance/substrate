@@ -1,0 +1,8 @@
+#!/bin/bash
+set -o pipefail
+
+# shellcheck disable=SC1091
+. common.sh
+
+# gofmt all .go files
+"$GOFMT" -w "${GO_SOURCE_FILES[@]}"

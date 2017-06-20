@@ -1,0 +1,19 @@
+#!/bin/bash
+set -o pipefail
+
+# shellcheck disable=SC1091
+. common.sh
+
+# check all the .sh files except those under ./vendor
+STATUS=0
+while read -r line; do
+	echo "[shellcheck]: $line"
+    STATUS=1
+done < <("$SHELLCHECK" -f gcc --exclude=SC1091 "${SHELL_FILES[@]}")
+
+while read -r line; do
+	echo "[shfmt]: bad formatting in $line"
+    STATUS=1
+done < <("$SHFMT" -l -i 2 "${SHELL_FILES[@]}")
+
+exit "$STATUS"

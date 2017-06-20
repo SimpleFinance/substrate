@@ -1,0 +1,16 @@
+[Unit]
+Description=journald-cloudwatch-logs
+After=substrate-border.service systemd-journal-remote.service
+Requires=substrate-border.service systemd-journal-remote.service
+ConditionHost=*.border-*
+
+[Service]
+User=systemd-journal-remote
+Group=systemd-journal-remote
+ExecStart=/usr/local/bin/jcl /etc/substrate/jcl.conf
+KillMode=process
+Restart=on-failure
+RestartSec=42s
+
+[Install]
+WantedBy=multi-user.target

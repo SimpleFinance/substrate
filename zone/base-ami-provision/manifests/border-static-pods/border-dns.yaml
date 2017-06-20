@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: border-dns
+spec:
+  hostNetwork: true
+  containers:
+    - name: dnsmasq
+      image: substrate/border-dns-dnsmasq
+      imagePullPolicy: Never
+      ports:
+        - containerPort: 53
+          protocol: TCP
+        - containerPort: 53
+          protocol: UDP
+      command: [
+        "/usr/sbin/dnsmasq",
+        # "Do NOT fork into the background, do NOT run in debug mode."
+        "--keep-in-foreground",
+        # "Log DNS queries."
+        "--log-queries",
+        # "Log to this syslog facility or file. (defaults to DAEMON)"
+        "--log-facility=-",
+        # "Specify local address(es) to listen on.",
+        "--listen-address=127.0.0.1,${INTERNAL_IP}"
+      ]
+      securityContext:
+        capabilities:
+          add: [ NET_ADMIN ]
+      volumeMounts:
+      - mountPath: /etc/dnsmasq/extra-hosts/
+        name: extra-hosts-dir
+        readOnly: true
+    - name: watch-ec2
+      image: substrate/border-dns-watch-ec2
+      imagePullPolicy: Never
+      volumeMounts:
+      - mountPath: /etc/dnsmasq/extra-hosts/
+        name: extra-hosts-dir
+      env:
+      - name: SUBSTRATE_ZONE
+        value: "${SUBSTRATE_ZONE}"
+      - name: AWS_DEFAULT_REGION
+        value: "${AWS_DEFAULT_REGION}"
+  volumes:
+    - name: extra-hosts-dir
+      emptyDir: {}

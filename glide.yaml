@@ -1,0 +1,31 @@
+package: github.com/SimpleFinance/substrate
+import:
+- package: github.com/aws/aws-sdk-go
+  version: ~v1.1.12
+  subpackages:
+  - aws
+  - aws/session
+  - service/ec2
+- package: github.com/hashicorp/terraform
+  version: v0.8.3
+  subpackages:
+  - helper/resource
+  - helper/schema
+  - plugin
+  - terraform
+- package: gopkg.in/alecthomas/kingpin.v2
+  version: ~v2.1.11
+- package: github.com/goware/prefixer
+- package: github.com/miekg/dns
+- package: golang.org/x/crypto
+  subpackages:
+  - ssh
+- package: golang.org/x/sync
+  subpackages:
+  - errgroup
+- package: golang.org/x/net
+  subpackages:
+  - context
+- package: github.com/apparentlymart/go-cidr
+  subpackages:
+  - cidr

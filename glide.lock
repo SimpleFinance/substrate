@@ -1,0 +1,135 @@
+hash: 7f198dfa00cd5f41f4adfb1f37fe270fb3d892703d448a552a71ee8efb3dd4a0
+updated: 2016-11-17T22:26:44.632830782-06:00
+imports:
+- name: github.com/alecthomas/template
+  version: a0175ee3bccc567396460bf5acd36800cb10c49c
+  subpackages:
+  - parse
+- name: github.com/alecthomas/units
+  version: 2efee857e7cfd4f3d0138cc3cbb1b4966962b93a
+- name: github.com/apparentlymart/go-cidr
+  version: a3ebdb999b831ecb6ab8a226e31b07b2b9061c47
+  subpackages:
+  - cidr
+- name: github.com/aws/aws-sdk-go
+  version: 8f2725740345a0561fa09669f5f75f905404ef8b
+  subpackages:
+  - aws
+  - aws/awserr
+  - aws/awsutil
+  - aws/client
+  - aws/client/metadata
+  - aws/corehandlers
+  - aws/credentials
+  - aws/credentials/ec2rolecreds
+  - aws/defaults
+  - aws/ec2metadata
+  - aws/request
+  - aws/session
+  - private/endpoints
+  - private/protocol
+  - private/protocol/ec2query
+  - private/protocol/json/jsonutil
+  - private/protocol/jsonrpc
+  - private/protocol/query
+  - private/protocol/query/queryutil
+  - private/protocol/rest
+  - private/protocol/restxml
+  - private/protocol/xml/xmlutil
+  - private/signer/v4
+  - private/waiter
+  - service/autoscaling
+  - service/cloudwatchlogs
+  - service/ec2
+  - service/iam
+  - service/route53
+  - service/s3
+  - service/sqs
+- name: github.com/davecgh/go-spew
+  version: 5215b55f46b2b919f50a1df0eaa5886afe4e3b3d
+  subpackages:
+  - spew
+- name: github.com/go-ini/ini
+  version: afbd495e5aaea13597b5e14fe514ddeaa4d76fc3
+- name: github.com/goware/prefixer
+  version: 395022866408d928fc2439f7eac73dd8d370ec1d
+- name: github.com/hashicorp/errwrap
+  version: 7554cd9344cec97297fa6649b055a8c98c2a1e55
+- name: github.com/hashicorp/go-getter
+  version: 2822987a64e0df1236ac29dd277ddf79f4871f9a
+  subpackages:
+  - helper/url
+- name: github.com/hashicorp/go-multierror
+  version: d30f09973e19c1dfcd120b2d9c4f168e68d6b5d5
+- name: github.com/hashicorp/go-plugin
+  version: 8cf118f7a2f0c7ef1c82f66d4f6ac77c7e27dc12
+- name: github.com/hashicorp/go-uuid
+  version: 36289988d83ca270bc07c234c36f364b0dd9c9a7
+- name: github.com/hashicorp/go-version
+  version: deeb027c13a95d56c7585df3fe29207208c6706e
+- name: github.com/hashicorp/hcl
+  version: 9a905a34e6280ce905da1a32344b25e81011197a
+  subpackages:
+  - hcl/ast
+  - hcl/parser
+  - hcl/scanner
+  - hcl/strconv
+  - hcl/token
+  - json/parser
+  - json/scanner
+  - json/token
+- name: github.com/hashicorp/hil
+  version: 0640fefa3817883b16b77bf760c4c3a6f2589545
+  subpackages:
+  - ast
+- name: github.com/hashicorp/logutils
+  version: 0dc08b1671f34c4250ce212759ebd880f743d883
+- name: github.com/hashicorp/terraform
+  version: b845cb7093c24c49ece854bb38b55aff3783f195
+  subpackages:
+  - config
+  - config/module
+  - dag
+  - dot
+  - flatmap
+  - helper/config
+  - helper/hashcode
+  - helper/hilmapstructure
+  - helper/logging
+  - helper/resource
+  - helper/schema
+  - plugin
+  - terraform
+- name: github.com/hashicorp/yamux
+  version: df949784da9ed028ee76df44652e42d37a09d7e4
+- name: github.com/jmespath/go-jmespath
+  version: c01cf91b011868172fdcd9f41838e80c9d716264
+- name: github.com/miekg/dns
+  version: 58f52c57ce9df13460ac68200cef30a008b9c468
+- name: github.com/mitchellh/copystructure
+  version: 80adcec1955ee4e97af357c30dee61aadcc02c10
+- name: github.com/mitchellh/go-homedir
+  version: d682a8f0cf139663a984ff12528da460ca963de9
+- name: github.com/mitchellh/mapstructure
+  version: 281073eb9eb092240d33ef253c404f1cca550309
+- name: github.com/mitchellh/reflectwalk
+  version: eecf4c70c626c7cfbb95c90195bc34d386c74ac6
+- name: github.com/satori/go.uuid
+  version: 0aa62d5ddceb50dbcb909d790b5345affd3669b6
+- name: golang.org/x/crypto
+  version: 1f22c0103821b9390939b6776727195525381532
+  subpackages:
+  - curve25519
+  - ssh
+  - ssh/agent
+- name: golang.org/x/net
+  version: ffe101cce3477a6c6d8f0754d103bb0a84ec1266
+  subpackages:
+  - context
+- name: golang.org/x/sync
+  version: 316e794f7b5e3df4e95175a45a5fb8b12f85cb4f
+  subpackages:
+  - errgroup
+- name: gopkg.in/alecthomas/kingpin.v2
+  version: 8cccfa8eb2e3183254457fb1749b2667fbc364c7
+testImports: []

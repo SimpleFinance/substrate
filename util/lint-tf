@@ -1,0 +1,28 @@
+#!/bin/bash
+set -o pipefail
+
+# shellcheck disable=SC1091
+. common.sh
+
+STATUS=0
+
+# check all terraform modules with "terraform validate"
+for module in "${TERRAFORM_MODULES[@]}"; do
+	TFOUT=$("$TERRAFORM" validate "$module" 2>&1)
+	if [ $? -ne 0 ]; then
+        STATUS=1
+		while read -r line; do
+		    echo "[terraform validate]: $module - $line"
+		done < <(echo "$TFOUT" | egrep "^\*" | cut -c2-)
+	fi
+done
+
+# check all terraform files with "terraform fmt"
+for module in "${TERRAFORM_MODULES[@]}"; do
+    while read -r f; do
+        STATUS=1
+        echo "[terraform fmt]: $f isn't formatted correctly"
+    done < <("$TERRAFORM" fmt -list=true -write=false "$module")
+done
+
+exit "$STATUS"

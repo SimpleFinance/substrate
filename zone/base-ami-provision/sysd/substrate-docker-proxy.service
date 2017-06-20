@@ -1,0 +1,16 @@
+# Sets up the docker proxy envvar to point at border node
+
+[Unit]
+Description=Configure docker proxy envvar
+After=substrate-node-env.service
+Requires=substrate-node-env.service
+Before=cloud-final.service docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=True
+EnvironmentFile=/etc/substrate/node.env
+ExecStart=/usr/local/bin/substrate-docker-proxy.sh
+
+[Install]
+WantedBy=multi-user.target

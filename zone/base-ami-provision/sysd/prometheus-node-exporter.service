@@ -1,0 +1,24 @@
+# Runs the Prometheus node_exporter in a configuration for Substrate.
+#
+# This starts Promtheus node_exporter on every node, setting all the
+# custom parameters we want for Substrate's use case. The two
+# customizations we do are to filter out Kubernetes pod-related
+# volumes (mainly Secret mounts) and enabling systemd status collection.
+
+[Unit]
+Description=Promtheus node_exporter for Substrate
+Documentation=https://github.com/prometheus/node_exporter
+After=local-fs.target network-online.target network.target
+Wants=local-fs.target network-online.target network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/prometheus-node-exporter \
+    -web.listen-address ":9100" \
+    -web.telemetry-path "/metrics" \
+    -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|var/lib/kubelet)($|/)" \
+    -collector.systemd.unit-blacklist "(.*\.(device|path))|(var-lib-kubelet-pods-.*)" \
+    -collectors.enabled "conntrack,diskstats,entropy,filefd,filesystem,hwmon,loadavg,mdadm,meminfo,netdev,netstat,sockstat,stat,textfile,time,uname,vmstat,systemd"
+
+[Install]
+WantedBy=multi-user.target

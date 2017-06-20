@@ -1,0 +1,23 @@
+# Starts the Substrate border components.
+#
+# This unit runs only on the Substrate border nodes (using ConditionHost). It
+# launches the initial border-specific workload by installing static pod
+# manifests (found in /etc/substrate/manifests/border-static-pods/) so the
+# local kubelet will launch the border egress proxy, DNS, NTP, etc...
+
+[Unit]
+Description=Substrate Border
+After=docker.service substrate-node-env.service substrate-hostname.service
+Before=cloud-final.service
+Requires=docker.service substrate-node-env.service substrate-hostname.service
+ConditionHost=*.worker.*
+
+[Service]
+Type=oneshot
+RemainAfterExit=True
+EnvironmentFile=/etc/substrate/zone.env
+EnvironmentFile=/etc/substrate/node.env
+ExecStart=/usr/local/bin/substrate-node-join.sh
+
+[Install]
+WantedBy=multi-user.target

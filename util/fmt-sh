@@ -1,0 +1,7 @@
+#!/bin/bash
+set -o pipefail
+
+# shellcheck disable=SC1091
+. common.sh
+
+"$SHFMT" -w -i 2 "${SHELL_FILES[@]}"

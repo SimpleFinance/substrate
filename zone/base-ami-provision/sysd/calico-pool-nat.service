@@ -1,0 +1,25 @@
+# Sets up the --outgoing-nat for the default calico endpoint pool
+#
+# This unit runs relatively early in the boot process (after cloud-init, so
+# networking is up and running). It's job is to read EC2 metadata and user data
+# passed in from Terraform and create a file "/etc/substrate/node.env", which
+# contains all the node-specific configuration variables we'll need in other
+# units.
+
+[Unit]
+Description=Add NAT outgoing to 192.168.0.0/16
+After=kubelet.service substrate-director.service substrate-node-env.service
+Requires=kubelet.service substrate-node-env.service
+Before=cloud-final.service
+ConditionHost=*.director-*
+
+[Service]
+Type=oneshot
+RemainAfterExit=True
+EnvironmentFile=/etc/substrate/zone.env
+EnvironmentFile=/etc/substrate/node.env
+ExecStart=/usr/local/bin/calico-pool-nat.sh
+
+
+[Install]
+WantedBy=multi-user.target

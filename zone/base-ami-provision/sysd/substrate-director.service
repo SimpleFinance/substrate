@@ -1,0 +1,27 @@
+# Starts the Substrate director components.
+#
+# This unit runs only on the Substrate director nodes (using ConditionHost). It
+# launches the initial director-specific workload by installing static pod
+# manifests (found in /etc/substrate/manifests/director-static-pods/) so the
+# local kubelet will launch the core Kubernetes API components,such as etcd and
+# the Kubernetes apiserver.
+#
+# Once the core Kubernetes API is running, it creates a set of "initial"
+# resources using the API (found under /etc/substrate/manifests/initial/).
+
+[Unit]
+Description=Substrate Director
+After=docker.service substrate-node-env.service substrate-hostname.service
+Before=cloud-final.service
+Requires=docker.service substrate-node-env.service substrate-hostname.service
+ConditionHost=*.director-*
+
+[Service]
+Type=oneshot
+RemainAfterExit=True
+EnvironmentFile=/etc/substrate/zone.env
+EnvironmentFile=/etc/substrate/node.env
+ExecStart=/usr/local/bin/substrate-director.sh
+
+[Install]
+WantedBy=multi-user.target

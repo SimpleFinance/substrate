@@ -1,0 +1,14 @@
+#!/bin/bash
+set -o pipefail
+
+# shellcheck disable=SC1091
+. common.sh
+
+# look for trailing whitespace in all non-binary files (except in .git and ./vendor)
+STATUS=0
+while read -r match; do
+    echo "[style]: trailing whitespace in $(echo "$match" | cut -d: -f1-2)"
+    STATUS=1
+done < <(egrep -Hn -I " +$" "${SOURCE_FILES[@]}")
+
+exit "$STATUS"

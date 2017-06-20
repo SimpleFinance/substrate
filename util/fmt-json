@@ -1,0 +1,16 @@
+#!/bin/bash
+set -o pipefail
+
+# shellcheck disable=SC1091
+. common.sh
+
+# check all the .json files except those under ./vendor
+STATUS=0
+for filename in "${JSON_FILES[@]}"; do
+    jqout=$("$JQ" . --sort-keys "$filename" 2>&1)
+    if [ $? -eq 0 ]; then
+        echo "$jqout" > "$filename"
+    fi
+done
+
+exit "$STATUS"

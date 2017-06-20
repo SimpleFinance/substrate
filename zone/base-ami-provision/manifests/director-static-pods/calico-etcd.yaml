@@ -1,0 +1,30 @@
+# etcd for calico
+apiVersion: v1
+kind: Pod
+metadata:
+  name: calico-etcd
+  namespace: kube-system
+spec:
+  hostNetwork: true
+  containers:
+    - name: etcd
+      image: gcr.io/google_containers/etcd-amd64:2.2.5
+      imagePullPolicy: Never
+      command: [
+        "/usr/local/bin/etcd",
+        "--name=etcd0",
+        "--listen-client-urls=http://${INTERNAL_IP}:${CALICO_ETCD_PORT}",
+        "--advertise-client-urls=http://${INTERNAL_IP}:${CALICO_ETCD_PORT}",
+        "--listen-peer-urls=http://127.0.0.1:2381",
+        "--initial-advertise-peer-urls=http://127.0.0.1:2381",
+        "--data-dir=/var/etcd/data",
+        "--initial-cluster-token=etcd-cluster",
+        "--initial-cluster=etcd0=http://127.0.0.1:2381",
+        "--initial-cluster-state=new"
+      ]
+      volumeMounts:
+        - name: varetcd
+          mountPath: /var/etcd
+  volumes:
+    - name: varetcd
+      emptyDir: {}

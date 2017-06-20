@@ -1,0 +1,28 @@
+#!/bin/bash
+set -o pipefail
+STATUS=0
+
+# shellcheck disable=SC1091
+. common.sh
+
+# check all the .go files against gofmt
+while read -r f; do
+	echo "[gofmt]: bad formatting in $f"
+    STATUS=1
+done < <("$GOFMT" -l "${GO_SOURCE_FILES[@]}")
+
+# check all the .go files with "go vet"
+while read -r line; do
+	echo "[go vet]: $line"
+    STATUS=1
+done < <(go tool vet "${GO_SOURCE_DIRS[@]}" 2>&1)
+
+# check all the subdirectories with .go files with "golint"
+for subdir in "${GO_SOURCE_SUBDIRS[@]}"; do
+    while read -r line; do
+        echo "[golint]: $line"
+        STATUS=1
+    done < <("$GOLINT" "$subdir" 2>&1)
+done
+
+exit "$STATUS"

@@ -1,0 +1,21 @@
+# Renders Substrate node-specific variables into /etc/substrate/node.env.
+#
+# This unit runs relatively early in the boot process (after cloud-init, so
+# networking is up and running). It's job is to read EC2 metadata and user data
+# passed in from Terraform and create a file "/etc/substrate/node.env", which
+# contains all the node-specific configuration variables we'll need in other
+# units.
+
+[Unit]
+Description=Substrate node environment file
+After=cloud-init.service
+Before=cloud-final.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=True
+EnvironmentFile=/etc/substrate/zone.env
+ExecStart=/usr/local/bin/substrate-node-env.sh
+
+[Install]
+WantedBy=multi-user.target

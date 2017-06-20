@@ -1,0 +1,10 @@
+# Vacuums the journal-remote journal files.
+#
+# This unit is run periodically by a timer. It cleans up all archived journal files older than 1 hour.
+
+[Unit]
+Description=Substrate periodic job to vacuum /var/log/journal/remote files
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/find /var/log/journal/remote/ -type f -mmin +60 -iname '*@*' -delete

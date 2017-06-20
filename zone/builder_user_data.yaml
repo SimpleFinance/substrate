@@ -1,0 +1,22 @@
+#cloud-config
+bootcmd:
+- "mkdir /etc/substrate"
+write_files:
+- encoding: b64
+  content: "${zone_env}"
+  path: /etc/substrate/zone.env
+  permissions: '0664'
+  owner: root:root
+runcmd:
+- "set -e"
+- [ wget, -O, /tmp/provision.tgz.b64, "${payload_s3_uri}"]
+- [ mkdir, -p, /tmp/provision ]
+- [ mkdir, -p, /var/lib/provision ]
+- "base64 -d /tmp/provision.tgz.b64 > /tmp/provision.tgz"
+- "(echo '${payload_checksum}' | sha256sum -c) && tar -x -z -C /var/lib/provision -f /tmp/provision.tgz"
+- "cd /var/lib/provision && ./run.sh"
+- "echo '[PROVISION DONE]' 2>&1 | tee -a /etc/provision.done"
+power_state:
+  mode: poweroff
+  timeout: 300
+  condition: "cat /etc/provision.done"

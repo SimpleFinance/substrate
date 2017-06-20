@@ -1,0 +1,16 @@
+# Vacuums the journal-remote journal files.
+#
+# This is a periodic timer that triggers the substrate-vacuum-journal-remote.service.
+
+[Unit]
+Description=Substrate periodic timer to fire off the substrate-vacuum-journal-remote.service job.
+After=substrate-border.service systemd-journal-remote.service
+Requires=substrate-border.service systemd-journal-remote.service
+ConditionHost=*.border-*
+
+[Timer]
+OnCalendar=minutely
+RandomizedDelaySec=5
+
+[Install]
+WantedBy=multi-user.target

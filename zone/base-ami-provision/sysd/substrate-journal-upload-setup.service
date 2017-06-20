@@ -1,0 +1,20 @@
+# Sets up journal-upload for a node
+#
+# Runs on all nodes except the border (which acts as the aggregator)
+# Configures  /etc/systemd/journal-upload.conf to point at the border node
+
+[Unit]
+Description=Journal Upload Setup
+After=substrate-node-env.service
+Before=cloud-final.service
+Requires=substrate-node-env.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=True
+EnvironmentFile=/etc/substrate/zone.env
+EnvironmentFile=/etc/substrate/node.env
+ExecStart=/usr/local/bin/substrate-journal-upload-setup.sh
+
+[Install]
+WantedBy=multi-user.target

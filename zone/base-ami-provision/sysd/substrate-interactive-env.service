@@ -1,0 +1,21 @@
+# Renders Substrate variables for interactive tooling into /etc/substrate/interactive.env
+#
+# This unit runs relatively early in the boot process (after cloud-init, so
+# networking is up and running). It's job is to read EC2 metadata and user data
+# passed in from Terraform and create a file "/etc/substrate/node.env", which
+# contains all the node-specific configuration variables we'll need in other
+# units.
+
+[Unit]
+Description=Substrate interactive environment file
+After=cloud-init.service
+Before=cloud-final.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=True
+EnvironmentFile=/etc/substrate/zone.env
+ExecStart=/usr/local/bin/substrate-interactive-env.sh
+
+[Install]
+WantedBy=multi-user.target

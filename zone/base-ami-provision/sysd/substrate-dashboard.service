@@ -1,0 +1,16 @@
+# Launches the kubernetes dashboard.
+#
+[Unit]
+Description=Insure Kubernetes Dashboard Launch
+After=substrate-director.service
+Before=cloud-final.service
+Requires=substrate-director.service
+ConditionHost=*.director-*
+
+[Service]
+Type=oneshot
+RemainAfterExit=True
+ExecStart=/usr/bin/kubectl apply -f /etc/substrate/manifests/dashboard/kubernetes-dashboard.yaml
+
+[Install]
+WantedBy=multi-user.target

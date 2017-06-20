@@ -1,0 +1,10 @@
+#!/bin/bash
+set -o pipefail
+
+# shellcheck disable=SC1091
+. common.sh
+
+# strip trailing whitespace in all non-binary files (except in .git and ./vendor)
+while read -r filename; do
+    LC_ALL=C sed -i '' -E  "s/ +$//" "$filename"
+done < <(egrep -l -I " +$" "${SOURCE_FILES[@]}")

@@ -1,0 +1,9 @@
+================================= WARNING ===================================
+This system is solely for the use of authorized users for official purposes.
+The operators of this network reserve the right to monitor use of this system
+to ensure security and to respond to specific allegations of employee misuse.
+Use of this system or network shall constitute consent to monitoring for such
+purposes. In addition, the operators of this network reserve the right to
+consent to a valid law enforcement request to search the network for evidence
+of a crime stored within the network.
+=============================================================================

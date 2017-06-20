@@ -1,0 +1,28 @@
+# Runs Docker in a custom configuration for Substrate.
+#
+# This starts Docker on every node (worker and director), setting all the
+# custom parameters we want for Substrate's use case.
+
+[Unit]
+Description=Docker for Substrate
+Documentation=https://docs.docker.com
+After=network.target docker.socket
+Before=cloud-final.service
+Requires=docker.socket
+
+[Service]
+Type=notify
+# the default is not to use systemd for cgroups because the delegate issues still
+# exists and systemd currently does not support the cgroup feature set required
+# for containers run by docker
+ExecStart=/usr/bin/docker daemon --log-driver=journald -H fd://
+MountFlags=slave
+LimitNOFILE=1048576
+LimitNPROC=1048576
+LimitCORE=infinity
+TimeoutStartSec=0
+# set delegate yes so that systemd does not reset the cgroups of docker containers
+Delegate=yes
+
+[Install]
+WantedBy=multi-user.target
